@@ -1,0 +1,1 @@
+export { Auth } from '@/services/auth/auth.service';
