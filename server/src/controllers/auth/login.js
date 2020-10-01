@@ -25,7 +25,6 @@ module.exports = async (req, res) => {
     try {
         const { identify, password, remember } = req.body;
         const user = regExpEmail.test(identify) ? await userByEmail(identify, remember) : await userByUsername(identify, remember);
-        console.log(user)
         if (user) {
             const same = await bcrypt.compare(password, user.password);
             if (same) {

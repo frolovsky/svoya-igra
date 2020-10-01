@@ -10,32 +10,32 @@ const Login = () => import('../components/auth/login/login.vue')
 const Register = () => import('../components/auth/register/register.vue')
 
 const routes = [
-{
-  children: [
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },
-  ],
-  path: '/',
-  name: 'Home',
-  redirect: '/login',
-  component: Home
-},
-{
-  path: '/app',
-  name: 'App',
-  component: App,
-  meta: {
-    authOnly: true
+  {
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login
+      },
+      {
+        path: '/register',
+        name: 'Register',
+        component: Register
+      },
+    ],
+    path: '/',
+    name: 'Home',
+    redirect: '/login',
+    component: Home
+  },
+  {
+    path: '/app',
+    name: 'App',
+    component: App,
+    meta: {
+      authOnly: true
+    }
   }
-}
 ]
 
 const router = new VueRouter({

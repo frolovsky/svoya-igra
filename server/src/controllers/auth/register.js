@@ -4,8 +4,8 @@ const cm = require('../../utility/user/cookie-manager')
 
 module.exports = async (req, res) => {
 	if (req.cookies['auth-user-payload']) {
-        throw new Error('Already logged')
-    }
+		throw new Error('Already logged')
+	}
 	try {
 		const cookieHash = await cm.genCookie(req.body.email)
 		const count = await User.find().countDocuments() + 1

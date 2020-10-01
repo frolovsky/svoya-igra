@@ -15,7 +15,8 @@ import AuthForm from '@/components/auth/auth-form/auth-form.vue'
 import AuthRouterLink from '@/components/auth/auth-router-link/auth-router-link.vue'
 import authMixin from '@/mixins/auth/auth.js'
 import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators';
-import { User } from '@/services/User.js'
+import { mapActions } from 'vuex';
+import { SEND_REGISTRATION } from '@/store/auth/actions' 
 
 export default {
     name: 'Register',
@@ -76,6 +77,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions('auth', {
+            sendRegistration: SEND_REGISTRATION
+        }),
         isEmailInvalid: function() {
             return ( this.$v.email.$dirty && (!this.$v.email.required || !this.$v.email.maxLength || !this.$v.email.email) )
         },
@@ -101,7 +105,7 @@ export default {
             }
             // submit
             try {
-                await User.create(this.formData)
+                await this.sendRegistration(this.formData)
                 this.$router.push({ name: 'App' })
             } catch (e) {
                 this.error = e.response.data.error

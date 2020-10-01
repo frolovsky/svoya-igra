@@ -15,7 +15,9 @@ import AuthForm from '@/components/auth/auth-form/auth-form.vue'
 import AuthRouterLink from '@/components/auth/auth-router-link/auth-router-link.vue'
 import authMixin from '@/mixins/auth/auth.js'
 import { required, minLength, maxLength } from 'vuelidate/lib/validators';
-import { User } from '@/services/User.js'
+import { SEND_LOGIN } from '@/store/auth/actions';
+import { mapActions } from 'vuex'
+
 export default {
     name: 'Login',
     mixins: [authMixin],
@@ -71,6 +73,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions('auth', {
+            sendLogin: SEND_LOGIN
+        }),
         isIdentifyInvalid: function() {
             return ( this.$v.identify.$dirty && (!this.$v.identify.required || !this.$v.identify.minLength || !this.$v.identify.maxLength) )
         },
@@ -93,9 +98,8 @@ export default {
                 return;
             }
             // submit
-            console.log(this.formData)
-            await User.login(this.formData)
-            console.log(document.cookie)
+            await this.sendLogin(this.formData)
+            this.$router.push({ name: 'App' })
         },
     },
     validations: {
