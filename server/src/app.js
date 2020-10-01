@@ -30,7 +30,9 @@ mongoose.connection
 const registerController = require('./controllers/auth/register')
 const loginController = require('./controllers/auth/login')
 const logoutController = require('./controllers/auth/logout')
+const getUserInfoController = require('./controllers/auth/get-user-info')
 
 app.post('/users/register', registerController)
 app.post('/users/login', loginController) 
 app.post('/users/logout', logoutController)
+app.post('/users/me', getUserInfoController)

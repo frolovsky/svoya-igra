@@ -9,17 +9,11 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { SEND_LOGOUT } from '@/store/auth/actions'
 export default {
     name: 'HeaderProfileMenu',
     methods: {
-        ...mapActions('auth', {
-            sendLogout: SEND_LOGOUT
-        }),
-        async logout() {
-            await this.sendLogout();
-            this.$router.push({ name: 'Login' })
+        logout() {
+            this.$emit('logout')
         }
     }
 }

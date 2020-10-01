@@ -19,7 +19,11 @@ module.exports = async (req, res) => {
 		
 		cm.setCookie(res, 'auth-user-payload', cookieHash)
 
-		res.sendStatus(200)
+		const user = await User.findOne({ email: req.body.email }, 'email username')
+
+		res.send({
+			user
+		})
 	} catch (e) {
 		let error = 'Возникла неизвестная ошибка при регистрации';
 		if (e.code === 11000) {
