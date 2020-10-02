@@ -99,7 +99,7 @@ export default {
             }
             // submit
             await this.sendLogin(this.formData)
-            this.$router.push({ name: 'App' })
+            this.$router.push({ name: 'Home' })
         },
     },
     validations: {
