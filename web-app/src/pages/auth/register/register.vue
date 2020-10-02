@@ -106,7 +106,7 @@ export default {
             // submit
             try {
                 await this.sendRegistration(this.formData)
-                this.$router.push({ name: 'App' })
+                this.$router.push({ name: 'Home' })
             } catch (e) {
                 this.error = e.response.data.error
             }

@@ -4,36 +4,34 @@ import { Auth } from '@/services/auth'
 
 Vue.use(VueRouter)
 
-const App = () => import('../pages/app/App.vue')
 const Home = () => import('../pages/home/Home.vue')
-const Login = () => import('../components/auth/login/login.vue')
-const Register = () => import('../components/auth/register/register.vue')
+const Login = () => import('../pages/auth/login/login.vue')
+const Register = () => import('../pages/auth/register/register.vue')
 
 const routes = [
   {
-    children: [
-      {
-        path: '/login',
-        name: 'Login',
-        component: Login
-      },
-      {
-        path: '/register',
-        name: 'Register',
-        component: Register
-      },
-    ],
     path: '/',
     name: 'Home',
-    redirect: '/login',
-    component: Home
+    component: Home,
+    meta: {
+      authOnly: true,
+      layout: 'main',
+    },
   },
   {
-    path: '/app',
-    name: 'App',
-    component: App,
+    path: '/register',
+    name: 'Register',
+    component: Register,
     meta: {
-      authOnly: true
+      layout: 'auth'
+    }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      layout: 'auth'
     }
   }
 ]
@@ -49,7 +47,7 @@ router.beforeEach((to, _from, next) => {
   if (!Auth.isAuthorized() && authOnly) {
     next({ name: 'Login' });
   } else if (Auth.isAuthorized() && !authOnly) {
-    next({ name: 'App' });
+    next({ name: 'Home' });
   } else {
     next();
   }
